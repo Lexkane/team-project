@@ -1,11 +1,16 @@
 package config
 
 import (
+	//import of database
 	"bytes"
+	"database/sql"
+	_ "database/sql"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
 	"log"
+
+	_ "../database"
 )
 
 // Config is variable for config
@@ -18,13 +23,14 @@ var (
 type Configuration struct {
 	ListenURL   string `json:"ListenURL"`
 	LogFilePath string `json:"LogFilePath"`
+	Database    sql.DB `json:"Database"`
 }
 
 // Load loads config once
 func Load() error {
 	err := readFromJSON(FilePath)
 	if err != nil {
-		return errors.New("configuration not found. Please specify configuration")
+		return errors.New("Setup configurations please")
 	}
 
 	return nil
@@ -32,7 +38,7 @@ func Load() error {
 
 // readFromJSON reads config data from JSON-file
 func readFromJSON(configFilePath string) error {
-	log.Printf("Looking for JSON config file (%s)", configFilePath)
+	log.Printf("Searching for JSON config file (%s)", configFilePath)
 
 	contents, err := ioutil.ReadFile(configFilePath)
 	if err == nil {
@@ -42,7 +48,7 @@ func readFromJSON(configFilePath string) error {
 	if err != nil {
 		log.Printf("Reading configuration from JSON (%s) failed: %s\n", configFilePath, err)
 	} else {
-		log.Printf("Configuration has been read from JSON (%s) successfully\n", configFilePath)
+		log.Printf("Configuration loaded  from JSON (%s) successfully\n", configFilePath)
 	}
 
 	return err

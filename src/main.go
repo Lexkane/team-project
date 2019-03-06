@@ -28,6 +28,19 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
 	}
+
+
+	database.DB, err = database.SetupPostgres(config.Config.Database)
+	if err != nil {
+		log.Fatalf("error while loading postgreSQL: %s:", err)
+	}
+
+	database.Cache, err = database.SetupRedis(config.Config.Database)
+
+	if err != nil {
+		log.Fatalf("error while loading redis: %s:", err)
+	}
+
 	defer func() {
 		err = f.Close()
 		if err != nil {

@@ -4,3 +4,11 @@ import:
   version: ^1.6.2
 - package: github.com/urfave/negroni
   version: ^0.3.0
+- package: github.com/Masterminds/squirrel
+- package: github.com/alicebob/miniredis
+- package: github.com/go-redis/redis
+- package: github.com/gorilla/mux
+- package: github.com/lib/pq
+- package: github.com/satori/go.uuid
+- package: github.com/tsenart/vegeta
+- package: github.com/pressly/goose

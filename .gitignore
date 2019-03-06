@@ -24,7 +24,7 @@ glide.lock
 vendor/
 
 # IDEs:
-.idea/
+.idea/*
 
 # logs:
 *.log
