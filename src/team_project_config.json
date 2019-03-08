@@ -1,5 +1,26 @@
 {
   "ListenURL": ":8080",
   "APIVersion": "/v1",
-  "LogFilePath": "team_project_log_file.log"
+  "LogFilePath": "team_project_log_file.log",
+  "Database": {
+    "Type": ["PostgreSQL","Redis","Neo4j"],
+    "PostgreSQL": {
+      "Username": "postgres",
+      "Password": "postgres",
+      "DatabaseName": "team-project",
+      "Hostname": "postgres",
+      "Port": 5432
+    },
+    "Redis":{
+      "URL":"redis",
+      "Port":6379
+    },
+    "neo4j": {
+      "Username": "admin",
+      "Password": "admin",
+      "DatabaseName": "railroad",
+      "Hostname": "neo4j",
+      "Port": 7687
+    }
+  }
 }

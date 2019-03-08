@@ -3,8 +3,8 @@ package services
 import (
 	"net/http"
 
+	"./welcome"
 	"github.com/gorilla/mux"
-	"github.com/mshto/team-project/src/services/welcome"
 )
 
 // NewRouter creates a router for URL-to-service mapping

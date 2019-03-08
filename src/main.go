@@ -5,14 +5,15 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/mshto/team-project/src/config"
-	"github.com/mshto/team-project/src/services"
+     "./database"
+	"./services"
+	"./config"
 	"github.com/urfave/negroni"
+
 )
 
 func main() {
-	configFile := flag.String("config", "./team_project_config.json", "Configuration file in JSON-format")
+	configFile := flag.String("config", "src/team_project_config.json", "Configuration file in JSON-format")
 	flag.Parse()
 
 	if len(*configFile) > 0 {
@@ -50,7 +51,7 @@ func main() {
 
 	log.SetOutput(f)
 
-	// setting up web server middlewares
+	// setting up middleware
 	middlewareManager := negroni.New()
 	middlewareManager.Use(negroni.NewRecovery())
 	middlewareManager.UseHandler(services.NewRouter())

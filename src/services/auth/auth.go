@@ -2,12 +2,15 @@
 package auth
 
 import (
-"encoding/json"
-"errors"
-"github.com/satori/go.uuid"
-"log"
-"net/http"
-"time"
+	"../../database"
+	"../../entity"
+	"../common"
+	"encoding/json"
+	"errors"
+	"github.com/satori/go.uuid"
+	"log"
+	"net/http"
+	"time"
 )
 
 //Login stores info for logging
@@ -29,7 +32,7 @@ var Login = func(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userInDB, err := model.GetUserForLogin(newLogin.Login, newLogin.Password)
+	userInDB, err := entity.GetUserForLogin(newLogin.Login, newLogin.Password)
 	if err != nil {
 		common.SendError(w, r, 401, "ERROR: "+err.Error(), err)
 		return

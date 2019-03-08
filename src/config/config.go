@@ -4,14 +4,11 @@ import (
 	//import of database
 	"bytes"
 	"database/sql"
-	_ "database/sql"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
 	"log"
-
-	_ "../database"
-)
+	)
 
 // Config is variable for config
 var (

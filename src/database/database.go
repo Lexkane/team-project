@@ -1,11 +1,13 @@
+//Package database provides DB connections
 package database
 
 import (
-"database/sql"
-"fmt"
-"github.com/go-redis/redis"
-_ "github.com/lib/pq"
-"log"
+	"database/sql"
+	"fmt"
+	"github.com/go-redis/redis"
+	_ "github.com/lib/pq"
+   	"github.com/neo4j/neo4j-go-driver/neo4j"
+	"log"
 )
 
 //DB is used for postgres connection
@@ -17,6 +19,11 @@ var (
 	Cache               *redis.Client
 	IsPostgresConnected bool
 	IsRedisConnected    bool
+	IsNeo4jConnected    bool
+	driver neo4j.Driver
+	session *neo4j.Session
+	result *neo4j.Result
+	err error
 )
 
 //Type is the type of database from a Type* constant
@@ -32,7 +39,7 @@ type Info struct {
 	Redis RedisInfo
 }
 
-//PostgreSQLInfo is db connection
+//PostgreSQLInfo is the details for the database connection
 type PostgreSQLInfo struct {
 	Hostname     string
 	Port         int
@@ -41,25 +48,40 @@ type PostgreSQLInfo struct {
 	Password     string
 }
 
-//RedisInfo shows info
+//RedisInfo shows redis information
 type RedisInfo struct {
 	URL  string
 	Port int
 }
 
-//DSN returns DSN
+type Neo4jInfo struct{
+	Hostname string
+	Port int
+	DatabaseName string
+	Username string
+	Password string
+}
+
+
+func DSNNeo4j(ci Neo4jInfo) string {
+	return fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		ci.Hostname, ci.Port, ci.Username, ci.Password, ci.DatabaseName)
+}
+
+//DSN returns the Data Source Name
 func DSN(ci PostgreSQLInfo) string {
 	return fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		ci.Hostname, ci.Port, ci.Username, ci.Password, ci.DatabaseName)
 }
 
-//DSN for Redis
+//DSNRedis Name for Redis
 func DSNRedis(ci RedisInfo) string {
 	return fmt.Sprintf("%s:%d", ci.URL, ci.Port)
 }
 
-//Setup connection to postgres
+//SetupPostgres used for setup connection to postgres
 func SetupPostgres(d Info) (*sql.DB, error) {
 	if IsPostgresConnected {
 		return DB, nil
@@ -77,7 +99,7 @@ func SetupPostgres(d Info) (*sql.DB, error) {
 	return db, err
 }
 
-//Get connection to redis
+//SetupRedis used for setup connection to redis
 func SetupRedis(d Info) (*redis.Client, error) {
 	if IsRedisConnected {
 		return Cache, nil
@@ -95,12 +117,16 @@ func SetupRedis(d Info) (*redis.Client, error) {
 	return client, err
 }
 
-//Cheking Postgres connection
+//SetPostgresConnected checks postgres connection
 func SetPostgresConnected() {
 	IsPostgresConnected = true
 }
 
-//Checking  Redis connection
+//SetRedisConnected checks redis connection
 func SetRedisConnected() {
 	IsRedisConnected = true
+}
+
+func setNeo4jConnected(){
+	IsNeo4jConnected=true
 }

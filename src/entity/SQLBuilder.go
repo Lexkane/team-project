@@ -3,7 +3,6 @@ package entity
 import (
 	"errors"
 	"net/url"
-
 	sq "github.com/Masterminds/squirrel"
 )
 

@@ -4,9 +4,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/mshto/team-project/src/services"
-)
+     "../../services"
+	)
 
 var router = services.NewRouter()
 
