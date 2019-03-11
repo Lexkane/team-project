@@ -12,3 +12,4 @@ import:
 - package: github.com/satori/go.uuid
 - package: github.com/tsenart/vegeta
 - package: github.com/pressly/goose
+- package: github.com/neo4j/neo4j-go-driver
